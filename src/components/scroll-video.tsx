@@ -49,7 +49,8 @@ export function ScrollVideo() {
     const animate = () => {
       smoothed += (target - smoothed) * 0.12;
       if (bitmaps.length) {
-        draw(bitmaps[Math.min(bitmaps.length - 1, Math.round(smoothed * (bitmaps.length - 1)))]);
+        const frame = bitmaps[Math.min(bitmaps.length - 1, Math.round(smoothed * (bitmaps.length - 1)))];
+        if (frame) draw(frame);
       } else if (video.readyState >= 2 && Number.isFinite(video.duration)) {
         const time = smoothed * Math.max(0, video.duration - 0.05);
         if (!video.seeking && Math.abs(video.currentTime - time) > 0.04) video.currentTime = time;
@@ -58,7 +59,7 @@ export function ScrollVideo() {
     };
 
     const waitForEvent = (element: HTMLVideoElement, event: string) => new Promise<void>((resolve, reject) => {
-      const timeout = window.setTimeout(() => { cleanup(); reject(new Error("Video load timed out")); }, 12000);
+      const timeout = window.setTimeout(() => { cleanup(); reject(new Error("Video load timed out")); }, 4000);
       const cleanup = () => { clearTimeout(timeout); element.removeEventListener(event, onEvent); element.removeEventListener("error", onError); };
       const onEvent = () => { cleanup(); resolve(); };
       const onError = () => { cleanup(); reject(new Error("Video failed to load")); };
@@ -68,7 +69,16 @@ export function ScrollVideo() {
 
     const extract = async () => {
       try {
-        if (video.readyState < 2) await waitForEvent(video, "loadeddata");
+        if (video.readyState < 2) {
+          try { await waitForEvent(video, "loadeddata"); }
+          catch {
+            // Some browsers cannot load the supplied CloudFront host directly.
+            // The mirror is byte-for-byte the same file and permits same-origin canvas drawing.
+            video.src = mirror.url;
+            video.load();
+            await waitForEvent(video, "loadeddata");
+          }
+        }
         if (cancelled) return;
         setVideoReady(true);
         await new Promise(resolve => setTimeout(resolve, 300));
@@ -98,7 +108,8 @@ export function ScrollVideo() {
         }
         if (cancelled) { frames.forEach(frame => frame.close()); return; }
         bitmaps = frames;
-        draw(bitmaps[Math.round(smoothed * (bitmaps.length - 1))]);
+        const firstFrame = bitmaps[Math.round(smoothed * (bitmaps.length - 1))];
+        if (firstFrame) draw(firstFrame);
         setCacheReady(true);
       } catch {
         // Seeking the visible video remains the fallback when frame extraction is unavailable.
