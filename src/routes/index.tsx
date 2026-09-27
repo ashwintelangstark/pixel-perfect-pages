@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowDown, ArrowRight, ArrowUpRight, AudioLines, Box, BrainCircuit, Eye, Monitor, Sparkles } from "lucide-react";
+import { ArrowRight, ArrowUpRight, AudioLines, Box, BrainCircuit, Eye, Monitor, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollVideo } from "@/components/scroll-video";
 import { JanuaryHeader } from "@/components/january-header";
@@ -32,7 +32,7 @@ function Index() {
       <div className="relative z-10">
         <JanuaryHeader />
         <main>
-          <section className="flex min-h-[min(850px,100svh)] flex-col justify-between px-5 pb-12 pt-28 sm:px-8 md:px-12 md:pb-16" aria-labelledby="home-title">
+          <section className="flex min-h-[calc(100svh-2rem)] flex-col justify-between px-5 pb-12 pt-28 sm:px-8 md:px-12 md:pb-16" aria-labelledby="home-title">
             <div className="mx-auto flex w-full max-w-7xl flex-wrap items-start justify-between gap-8">
               <div className="space-y-2 font-mono text-[11px] uppercase tracking-[0.16em] text-foreground/85 drop-shadow-md sm:text-xs">
                 <p>/ LOCAL INTELLIGENCE</p><p>/ NATIVE TO MACOS</p><p>/ ALWAYS IN YOUR CORNER</p>
@@ -47,8 +47,6 @@ function Index() {
               <Button asChild variant="novaSecondary" className="shrink-0"><Link to="/about">Explore January <ArrowUpRight size={16} /></Link></Button>
             </div>
           </section>
-
-          <div className="flex h-[28vh] items-end justify-center pb-8" aria-hidden="true"><ArrowDown size={22} className="animate-bounce text-foreground/70" /></div>
 
           <section className="relative border-t border-glass-border bg-background/85 px-5 py-20 backdrop-blur-lg sm:px-8 md:px-12 md:py-28" aria-labelledby="capability-title">
             <div className="mx-auto max-w-7xl">
