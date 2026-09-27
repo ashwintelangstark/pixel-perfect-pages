@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import poster from "@/assets/nova-hero-poster.jpg.asset.json";
-import mirror from "@/assets/nova-browser.webm.asset.json";
+import poster from "@/assets/january-hero-poster.jpg.asset.json";
+import mirror from "@/assets/january-browser.webm.asset.json";
 
-const VIDEO_URL = "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260729_102822_0e6c87e8-c141-4744-bf32-ad30db296371.mp4";
+const VIDEO_URL =
+  "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260729_102822_0e6c87e8-c141-4744-bf32-ad30db296371.mp4";
 
 export function ScrollVideo() {
   const visibleRef = useRef<HTMLVideoElement>(null);
@@ -44,12 +45,19 @@ export function ScrollVideo() {
       const scale = Math.max(width / bitmap.width, height / bitmap.height);
       const imageWidth = bitmap.width * scale;
       const imageHeight = bitmap.height * scale;
-      context.drawImage(bitmap, (width - imageWidth) / 2, (height - imageHeight) / 2, imageWidth, imageHeight);
+      context.drawImage(
+        bitmap,
+        (width - imageWidth) / 2,
+        (height - imageHeight) / 2,
+        imageWidth,
+        imageHeight,
+      );
     };
     const animate = () => {
       smoothed += (target - smoothed) * 0.12;
       if (bitmaps.length) {
-        const frame = bitmaps[Math.min(bitmaps.length - 1, Math.round(smoothed * (bitmaps.length - 1)))];
+        const frame =
+          bitmaps[Math.min(bitmaps.length - 1, Math.round(smoothed * (bitmaps.length - 1)))];
         if (frame) draw(frame);
       } else if (video.readyState >= 2 && Number.isFinite(video.duration)) {
         const time = smoothed * Math.max(0, video.duration - 0.05);
@@ -58,20 +66,35 @@ export function ScrollVideo() {
       frameId = requestAnimationFrame(animate);
     };
 
-    const waitForEvent = (element: HTMLVideoElement, event: string) => new Promise<void>((resolve, reject) => {
-      const timeout = window.setTimeout(() => { cleanup(); reject(new Error("Video load timed out")); }, 4000);
-      const cleanup = () => { clearTimeout(timeout); element.removeEventListener(event, onEvent); element.removeEventListener("error", onError); };
-      const onEvent = () => { cleanup(); resolve(); };
-      const onError = () => { cleanup(); reject(new Error("Video failed to load")); };
-      element.addEventListener(event, onEvent, { once: true });
-      element.addEventListener("error", onError, { once: true });
-    });
+    const waitForEvent = (element: HTMLVideoElement, event: string) =>
+      new Promise<void>((resolve, reject) => {
+        const timeout = window.setTimeout(() => {
+          cleanup();
+          reject(new Error("Video load timed out"));
+        }, 4000);
+        const cleanup = () => {
+          clearTimeout(timeout);
+          element.removeEventListener(event, onEvent);
+          element.removeEventListener("error", onError);
+        };
+        const onEvent = () => {
+          cleanup();
+          resolve();
+        };
+        const onError = () => {
+          cleanup();
+          reject(new Error("Video failed to load"));
+        };
+        element.addEventListener(event, onEvent, { once: true });
+        element.addEventListener("error", onError, { once: true });
+      });
 
     const extract = async () => {
       try {
         if (video.readyState < 2) {
-          try { await waitForEvent(video, "loadeddata"); }
-          catch {
+          try {
+            await waitForEvent(video, "loadeddata");
+          } catch {
             // Some browsers cannot load the supplied CloudFront host directly.
             // The mirror is byte-for-byte the same file and permits same-origin canvas drawing.
             video.src = mirror.url;
@@ -81,7 +104,7 @@ export function ScrollVideo() {
         }
         if (cancelled) return;
         setVideoReady(true);
-        await new Promise(resolve => setTimeout(resolve, 300));
+        await new Promise((resolve) => setTimeout(resolve, 300));
         extractionVideo.src = mirror.url;
         extractionVideo.load();
         if (extractionVideo.readyState < 2) await waitForEvent(extractionVideo, "loadeddata");
@@ -89,7 +112,9 @@ export function ScrollVideo() {
         if (!Number.isFinite(duration) || !duration) return;
         const count = Math.min(90, Math.max(24, Math.round(duration * 12)));
         const width = Math.min(960, extractionVideo.videoWidth);
-        const height = Math.round(width * extractionVideo.videoHeight / extractionVideo.videoWidth);
+        const height = Math.round(
+          (width * extractionVideo.videoHeight) / extractionVideo.videoWidth,
+        );
         const frameCanvas = document.createElement("canvas");
         frameCanvas.width = width;
         frameCanvas.height = height;
@@ -106,7 +131,10 @@ export function ScrollVideo() {
           context.drawImage(extractionVideo, 0, 0, width, height);
           frames.push(await createImageBitmap(frameCanvas));
         }
-        if (cancelled) { frames.forEach(frame => frame.close()); return; }
+        if (cancelled) {
+          frames.forEach((frame) => frame.close());
+          return;
+        }
         bitmaps = frames;
         const firstFrame = bitmaps[Math.round(smoothed * (bitmaps.length - 1))];
         if (firstFrame) draw(firstFrame);
@@ -128,16 +156,32 @@ export function ScrollVideo() {
       window.removeEventListener("resize", updateTarget);
       extractionVideo.removeAttribute("src");
       extractionVideo.load();
-      bitmaps.forEach(frame => frame.close());
+      bitmaps.forEach((frame) => frame.close());
     };
   }, []);
 
   return (
-    <div className="fixed inset-0 z-0 overflow-hidden bg-background pointer-events-none" aria-hidden="true">
-      <img src={poster.url} alt="" className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${videoReady || cacheReady ? "opacity-0" : "opacity-100"}`} />
-      <video ref={visibleRef} src={VIDEO_URL} muted playsInline preload="auto" className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${videoReady && !cacheReady ? "opacity-100" : "opacity-0"}`} />
-      <canvas ref={canvasRef} className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${cacheReady ? "opacity-100" : "opacity-0"}`} />
-      <div className="absolute inset-0 bg-background/35" />
+    <div
+      className="fixed inset-0 z-0 overflow-hidden bg-background pointer-events-none"
+      aria-hidden="true"
+    >
+      <img
+        src={poster.url}
+        alt=""
+        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${videoReady || cacheReady ? "opacity-0" : "opacity-100"}`}
+      />
+      <video
+        ref={visibleRef}
+        src={VIDEO_URL}
+        muted
+        playsInline
+        preload="auto"
+        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${videoReady && !cacheReady ? "opacity-100" : "opacity-0"}`}
+      />
+      <canvas
+        ref={canvasRef}
+        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${cacheReady ? "opacity-100" : "opacity-0"}`}
+      />
     </div>
   );
 }

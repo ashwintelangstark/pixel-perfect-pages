@@ -16,10 +16,8 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        novaNav: "border border-glass-border bg-glass backdrop-blur-md text-foreground hover:bg-glass-hover rounded-md px-4 py-2 text-xs sm:px-5 sm:text-sm h-auto",
-        novaPrimary: "rounded-full bg-primary px-5 py-2.5 text-xs sm:text-sm text-primary-foreground hover:bg-primary/85 h-auto",
-        novaSecondary: "rounded-full border border-glass-border-strong bg-glass-soft backdrop-blur-md px-5 py-2.5 text-xs sm:text-sm text-foreground hover:bg-glass-hover h-auto",
-        novaSmall: "rounded-full bg-primary px-4 py-2 text-xs text-primary-foreground hover:bg-primary/85 h-auto",
+        januaryNav:
+          "border border-glass-border bg-glass backdrop-blur-md text-foreground hover:bg-glass-hover rounded-md px-4 py-2 text-xs sm:px-5 sm:text-sm h-auto",
       },
       size: {
         default: "h-9 px-4 py-2",
