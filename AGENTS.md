@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep the NovaAI page as the index route with a fixed scroll-scrubbed video layer; the requested composition is a single-page experience.
+- Mirror the provided video through project assets only for same-origin canvas frame extraction; retain the supplied CloudFront URL on the visible video.
