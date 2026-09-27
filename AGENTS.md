@@ -9,5 +9,6 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-- Keep the NovaAI page as the index route with a fixed scroll-scrubbed video layer; the requested composition is a single-page experience.
-- Mirror the provided video through project assets only for same-origin canvas frame extraction; retain the supplied CloudFront URL on the visible video.
+- Keep January’s home page on the index route with the inherited fixed scroll-scrubbed video layer; this preserves the established visual composition while About holds the full technical reference.
+- Mirror the supplied video through project assets only for same-origin canvas frame extraction; retain the supplied CloudFront URL on the visible video.
+- Store the full supplied January reference as a local Markdown source rendered on /about; this keeps the long-form information complete and maintainable.

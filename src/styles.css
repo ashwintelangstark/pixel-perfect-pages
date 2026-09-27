@@ -66,6 +66,7 @@
   --color-glass-hover: var(--glass-hover);
   --color-glass-border: var(--glass-border);
   --color-glass-border-strong: var(--glass-border-strong);
+  --color-signal: var(--signal);
 }
 
 :root {
@@ -79,6 +80,7 @@
   --glass-hover: oklch(1 0 0 / 25%);
   --glass-border: oklch(1 0 0 / 20%);
   --glass-border-strong: oklch(1 0 0 / 25%);
+  --signal: oklch(0.84 0.15 152);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
@@ -160,6 +162,27 @@
 
 .reveal { opacity: 0; transform: translateY(2rem); transition: opacity 700ms ease-out, transform 700ms ease-out; will-change: transform; }
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
+.january-reference { overflow-wrap: anywhere; color: color-mix(in oklch, var(--foreground) 80%, transparent); font-size: 0.95rem; line-height: 1.8; }
+.january-reference h1, .january-reference h2, .january-reference h3, .january-reference h4 { color: var(--foreground); line-height: 1.2; font-weight: 500; }
+.january-reference h1 { font-size: clamp(2.2rem, 5vw, 4rem); margin: 0 0 1.5rem; }
+.january-reference h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); margin: 0 0 1.7rem; }
+.january-reference h3 { font-size: 1.3rem; margin: 2.5rem 0 1rem; }
+.january-reference h4 { font-size: 1.05rem; margin: 2rem 0 1rem; }
+.january-reference p, .january-reference ul, .january-reference ol, .january-reference pre, .january-reference table, .january-reference blockquote { margin: 0 0 1.5rem; }
+.january-reference ul, .january-reference ol { padding-left: 1.5rem; }
+.january-reference ul { list-style: disc; }
+.january-reference ol { list-style: decimal; }
+.january-reference li { padding-left: .3rem; margin-bottom: .5rem; }
+.january-reference strong { color: var(--foreground); font-weight: 600; }
+.january-reference a { color: var(--signal); text-decoration: underline; text-underline-offset: 3px; }
+.january-reference a[href^="file:"] { pointer-events: none; text-decoration: none; color: inherit; }
+.january-reference hr { border-color: var(--glass-border); margin: 2.5rem 0; }
+.january-reference blockquote { border-left: 2px solid var(--signal); padding-left: 1.25rem; color: var(--foreground); }
+.january-reference pre { overflow-x: auto; padding: 1.25rem; border: 1px solid var(--glass-border); border-radius: .25rem; background: var(--glass-soft); font-size: .8rem; line-height: 1.6; }
+.january-reference :not(pre) > code { padding: .15rem .35rem; border-radius: .2rem; background: var(--glass-soft); font-size: .85em; }
+.january-reference table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: .85rem; }
+.january-reference th, .january-reference td { min-width: 8rem; padding: .75rem 1rem; border: 1px solid var(--glass-border); text-align: left; vertical-align: top; }
+.january-reference th { color: var(--foreground); background: var(--glass-soft); }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }

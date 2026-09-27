@@ -137,6 +137,7 @@ export function ScrollVideo() {
       <img src={poster.url} alt="" className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${videoReady || cacheReady ? "opacity-0" : "opacity-100"}`} />
       <video ref={visibleRef} src={VIDEO_URL} muted playsInline preload="auto" className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${videoReady && !cacheReady ? "opacity-100" : "opacity-0"}`} />
       <canvas ref={canvasRef} className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${cacheReady ? "opacity-100" : "opacity-0"}`} />
+      <div className="absolute inset-0 bg-background/35" />
     </div>
   );
 }
