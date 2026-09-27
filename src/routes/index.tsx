@@ -86,7 +86,7 @@ function Index() {
                   <div className="flex flex-col gap-1.5 pr-2">
                     <p className="text-sm font-medium text-foreground">Talk with Mitha</p>
                     <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-foreground/60">Co-founder of NovaAI</p>
-                    <Button asChild variant="novaSmall" className="mt-1.5 self-start"><a href="mailto:hello@novaai.com?subject=15-minute%20call%20with%20Mitha">Book 15-mins call <ChevronRight size={14} /></a></Button>
+                    <Button asChild variant="novaSmall" className="mt-1.5 self-start"><a href="mailto:?subject=15-minute%20call%20with%20Mitha">Book 15-mins call <ChevronRight size={14} /></a></Button>
                   </div>
                 </div>
               </Reveal>
