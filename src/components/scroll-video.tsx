@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import poster from "@/assets/nova-hero-poster.jpg.asset.json";
-import mirror from "@/assets/nova-hero.mp4.asset.json";
+import mirror from "@/assets/nova-browser.webm.asset.json";
 
 const VIDEO_URL = "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260729_102822_0e6c87e8-c141-4744-bf32-ad30db296371.mp4";
 
